@@ -1,0 +1,63 @@
+name: Refresh star history chart
+
+# The profile README embeds ./star-history.svg instead of hot-linking
+# api.star-history.com, whose SVG endpoint 503s whenever its GitHub API
+# tokens are rate-limited. This job refreshes the committed snapshot.
+
+on:
+  schedule:
+    - cron: '23 2 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # .star-count records the star count of the last committed snapshot.
+      # Skip everything when it hasn't moved — no fetch, no empty commit.
+      - name: Check whether star count changed
+        id: gate
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          current=$(gh api repos/zexuanw958-svg/travel-plan-viz --jq .stargazers_count)
+          last=$(cat .star-count 2>/dev/null || echo none)
+          echo "current=$current" >> "$GITHUB_OUTPUT"
+          echo "skip=$([ "$current" = "$last" ] && echo true || echo false)" >> "$GITHUB_OUTPUT"
+
+      - name: Fetch chart from star-history.com
+        if: steps.gate.outputs.skip == 'false'
+        id: fetch
+        run: |
+          ok=false
+          for i in $(seq 1 8); do
+            if curl -sSf -o /tmp/star-history.svg --max-time 30 \
+                 'https://api.star-history.com/svg?repos=zexuanw958-svg/travel-plan-viz&type=Date' \
+               && head -c 300 /tmp/star-history.svg | grep -q '<svg'; then
+              ok=true
+              break
+            fi
+            sleep 45
+          done
+          echo "ok=$ok" >> "$GITHUB_OUTPUT"
+          if [ "$ok" != true ]; then
+            echo "::notice::star-history.com unavailable; keeping the existing chart"
+          fi
+
+      - name: Commit updated chart
+        if: steps.gate.outputs.skip == 'false' && steps.fetch.outputs.ok == 'true'
+        run: |
+          mv /tmp/star-history.svg star-history.svg
+          echo '${{ steps.gate.outputs.current }}' > .star-count
+          git add star-history.svg .star-count
+          if ! git diff --cached --quiet; then
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git commit -m 'chore: refresh star history chart (${{ steps.gate.outputs.current }} stars)'
+            git push
+          fi

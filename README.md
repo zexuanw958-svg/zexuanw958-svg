@@ -4,7 +4,7 @@ I build small, focused open-source tools — mostly Agent Skills for Claude Code
 
 ## ⭐ Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=zexuanw958-svg/travel-plan-viz&type=Date)](https://star-history.com/#zexuanw958-svg/travel-plan-viz&Date)
+[![Star History Chart](./star-history.svg)](https://star-history.com/#zexuanw958-svg/travel-plan-viz&Date)
 
 ## 🚀 Projects
 
