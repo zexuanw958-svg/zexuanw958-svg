@@ -28,6 +28,7 @@
 | Project | 它解决什么 | Live proof |
 | --- | --- | --- |
 | 🧭 [**travel-plan-viz**](https://github.com/zexuanw958-svg/travel-plan-viz) | 把目的地和天数变成可离线、手机优先的单文件旅行攻略 | ![GitHub Repo stars](https://img.shields.io/github/stars/zexuanw958-svg/travel-plan-viz?style=flat-square&label=stars&color=151515) |
+| 🎞️ [**paper-collage-mv**](https://github.com/zexuanw958-svg/paper-collage-mv) | 给一首歌，让 Codex 写代码画出纸艺拼贴风的歌词 MV，不用 AI 绘画模型 | ![GitHub Repo stars](https://img.shields.io/github/stars/zexuanw958-svg/paper-collage-mv?style=flat-square&label=stars&color=151515) |
 | 📟 [**dsh-hud**](https://github.com/zexuanw958-svg/dsh-hud) | 给 DeepSeek Harness 的 Agent 会话装上一块实时状态仪表盘 | ![GitHub Repo stars](https://img.shields.io/github/stars/zexuanw958-svg/dsh-hud?style=flat-square&label=stars&color=151515) |
 | 🩺 [**clinic-skill**](https://github.com/zexuanw958-svg/clinic-skill) | 把多角色会诊、问题拆解和诊断流程封装成可复用 Skill | ![GitHub Repo stars](https://img.shields.io/github/stars/zexuanw958-svg/clinic-skill?style=flat-square&label=stars&color=151515) |
 | 🛡️ [**content-compliance-skill**](https://github.com/zexuanw958-svg/content-compliance-skill) | 面向抖音 / 小红书创作者的中文内容合规检查流程 | ![GitHub Repo stars](https://img.shields.io/github/stars/zexuanw958-svg/content-compliance-skill?style=flat-square&label=stars&color=151515) |
